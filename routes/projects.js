@@ -16,16 +16,8 @@ router.get('/', function (req, res) {
     });
 });
 
-/* GET all posts from an user by user Email */
-router.get('/all/:email', function (req, res) {
-    Task.find({'email':req.params.email}).sort('-publicationdate').exec(function (err, posts) {
-      if (err) res.status(500).send(err);
-      else res.status(200).json(posts);
-    });
-});
-
 /* POST a new task*/
-router.task('/', function (req, res) {
+router.post('/', function (req, res) {
     Task.create(req.body, function (err, postinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
