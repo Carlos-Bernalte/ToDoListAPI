@@ -6,19 +6,17 @@ var router = express.Router();
 //Models
 var Task = require('../models/Task.js');
 
-var db = mongoose.connection;
-
-/* GET posts listing ordered by publicationdate. */
+/* GET tasks list */
 router.get('/', function (req, res) {
-    Task.find().sort('-deadline').exec(function(err, posts) {
-      if (err) res.status(500).send(err);
-      else res.status(200).json(posts);
-    });
+  Task.find().exec(function(err, tasks) {
+    if (err) res.status(500).send(err);
+    else res.status(200).json(tasks);
+  });
 });
 
 /* POST a new task*/
 router.post('/', function (req, res) {
-    Task.create(req.body, function (err, postinfo) {
+    Task.create(req.body, function (err, taskinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
   });
@@ -26,7 +24,7 @@ router.post('/', function (req, res) {
 
 /* PUT an existing task */
 router.put('/:id', function (req, res) {
-    Task.findByIdAndUpdate(req.params.id, req.body, function (err, postinfo) {
+    Task.findByIdAndUpdate(req.params.id, req.body, function (err, taskinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
   });
@@ -34,7 +32,7 @@ router.put('/:id', function (req, res) {
 
 /* DELETE an existing task */
 router.delete('/:id', function (req, res) {
-    Task.findByIdAndDelete(req.params.id, function (err, postinfo) {
+    Task.findByIdAndDelete(req.params.id, function (err, taskinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
   });

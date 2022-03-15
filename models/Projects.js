@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
   name: String,
-  deadline: [task]
+  deadline: [Number]
 });
 
 module.exports = mongoose.model('Project', ProjectSchema);
