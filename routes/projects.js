@@ -4,38 +4,36 @@ var mongoose = require("mongoose");
 var router = express.Router();
 
 //Models
-var Task = require("../models/Task.js");
+var Project = require("../models/Project.js");
 
-/* GET tasks list */
-router.get("/:project_id", function (req, res) {
-  Task.find({'project_id':req.params.project_id}).exec(function (err, tasks) {
+/* GET All projects list from a user*/
+router.get("/", function (req, res) {
+  Project.find().exec(function (err, tasks) {
     if (err) res.status(500).send(err);
     else res.status(200).json(tasks);
-    console.log("TASKS: ",tasks);
+    console.log(tasks);
   });
 });
 
-/* POST a new task */
+/* POST a new project*/
 router.post("/", function (req, res) {
-  console.log(req.body);
-  Task.create(req.body, function (err, taskinfo) {
+  Project.create(req.body, function (err, projectinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
-    console.log(err);
   });
 });
 
-/* PUT an existing task */
+/* PUT an existing project */
 router.put("/:id", function (req, res) {
-  Task.findByIdAndUpdate(req.params.id, req.body, function (err, taskinfo) {
+  Project.findByIdAndUpdate(req.params.id, req.body, function (err, projectinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
   });
 });
 
-/* DELETE an existing task */
+/* DELETE an existing project */
 router.delete("/:id", function (req, res) {
-  Task.findByIdAndDelete(req.params.id, function (err, taskinfo) {
+  Project.findByIdAndDelete(req.params.id, function (err, projectinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
   });
