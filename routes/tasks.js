@@ -7,18 +7,21 @@ var router = express.Router();
 var Task = require("../models/Task.js");
 
 /* GET tasks list */
-router.get("/", function (req, res) {
-  Task.find().exec(function (err, tasks) {
+router.get("/:project_id", function (req, res) {
+  Task.find({'project_id':req.params.project_id}).exec(function (err, tasks) {
     if (err) res.status(500).send(err);
     else res.status(200).json(tasks);
+    console.log("TASKS: ",tasks);
   });
 });
 
-/* POST a new task*/
+/* POST a new task */
 router.post("/", function (req, res) {
+  console.log(req.body);
   Task.create(req.body, function (err, taskinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
+    console.log(err);
   });
 });
 

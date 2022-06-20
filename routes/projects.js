@@ -6,11 +6,12 @@ var router = express.Router();
 //Models
 var Project = require("../models/Project.js");
 
-/* GET project list from a user*/
+/* GET All projects list from a user*/
 router.get("/", function (req, res) {
   Project.find().exec(function (err, tasks) {
     if (err) res.status(500).send(err);
     else res.status(200).json(tasks);
+    console.log(tasks);
   });
 });
 
