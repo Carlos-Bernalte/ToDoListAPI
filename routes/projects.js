@@ -7,8 +7,8 @@ var router = express.Router();
 var Project = require("../models/Project.js");
 
 /* GET All projects list from a user*/
-router.get("/", function (req, res) {
-  Project.find().exec(function (err, tasks) {
+router.get("/:owner", function (req, res) {
+  Project.find({'owner':req.params.owner}).exec(function (err, tasks) {
     if (err) res.status(500).send(err);
     else res.status(200).json(tasks);
     console.log(tasks);
