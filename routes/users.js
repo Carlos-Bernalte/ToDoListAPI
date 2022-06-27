@@ -9,15 +9,26 @@ var User = require('../models/User.js');
 /* USER exists */
 // Function to return if a user exists using the username and password provided and router object
 
-router.get('/:username', function (req, res) {
-  console.log('Get one');
-  console.log(req.params);
+router.put('/:username', function (req, res) {
   User.find({'username':req.params.username}).exec(function(err, userinfo) {
     if (err) res.status(500).send(err);
-    else res.status(200).json(userinfo);
-    console.log(userinfo);
+    else {
+      if(req.body.password==userinfo[0].password){
+        res.status(200).json(userinfo);
+      }else{
+        res.status(500).send(err)
+      } 
+    }
   });
+});
 
+/* PUT an existing user */
+router.put('/:id', function (req, res) {
+  console.log("Update:",req.params, req.body);
+    User.findByIdAndUpdate(req.params.id, req.body, function (err, userinfo) {
+    if (err) res.status(500).send(err);
+    else res.sendStatus(200);
+  });
 });
 
 /* GET user list */
@@ -40,7 +51,7 @@ router.post('/', function (req, res) {
 
 /* PUT an existing user */
 router.put('/:id', function (req, res) {
-
+  console.log("Update:",req.params, req.body);
     User.findByIdAndUpdate(req.params.id, req.body, function (err, userinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
